@@ -19,8 +19,25 @@ def part1(rules):
 
     Returns an integer
     """
-    ### Replace with your code
-    return None
+    #print(rules)
+    def dfs(rules: dict[str, list[tuple[str,int]]], start: str, visited: set[str]):
+        visited.add(start)
+        if start == "shiny gold":
+            return True
+        for neighbor in rules[start]:
+            color, _ = neighbor
+            if color not in visited:
+                #print(f'from {start}, recirsion on {color}')
+                if dfs(rules, color, visited) is not None:
+                    return True
+    
+    count = 0
+    for color in rules:
+        if color != "shiny gold":
+            #print(dfs(rules, color, set()))
+            if dfs(rules, color, set()) is not None:
+                count += 1
+    return count
 
 
 def part2(rules):
